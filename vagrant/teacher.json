@@ -1,0 +1,18 @@
+{
+    "server": {
+        "id" : "teacher",
+        "hostname" : "teacher",
+        "memory": 512,
+        "cpus": 1,
+        "network" : {
+            "type" : "private_network",
+            "ip" : "10.10.60.103",
+            "ports" : [
+                { "host": 8000, "guest": 3000 }
+            ]
+        },
+        "hosts": [
+            { "hostname": "student", "ip": "10.10.60.102"}
+        ]
+    }
+}
