@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
     config.ssh.forward_x11 = true
     config.ssh.insert_key = false
     config.ssh.keep_alive = true
+    # config.ssh.password = "vagrant"
 
     # Every Vagrant development environment requires a box. You can search for
     # boxes at https://vagrantcloud.com/search.
@@ -53,6 +54,31 @@ Vagrant.configure("2") do |config|
                     echo "$2 $1 $1" >> /etc/hosts
                 SHELL
             end
+
+            server.vm.provision "ssh-keys", type: "shell", args: [ "#{hostname}", network['ip'] ], inline: <<-SHELL
+                touch ~vagrant/.ssh/known_hosts
+                ssh-keyscan -H $1 >> ~vagrant/.ssh/known_hosts
+                ssh-keyscan -H $2 >> ~vagrant/.ssh/known_hosts
+
+                mkdir -p ~vagrant/.ssh
+                cp /vagrant/vagrant/id_rsa* ~vagrant/.ssh/
+
+                chmod 700 ~vagrant/.ssh
+                chmod 644 ~vagrant/.ssh/id_rsa.pub
+                chmod 644 ~vagrant/.ssh/known_hosts
+                chmod 600 ~vagrant/.ssh/id_rsa
+                chown vagrant:vagrant -R ~vagrant/.ssh
+                cat ~vagrant/.ssh/id_rsa.pub >> ~vagrant/.ssh/authorized_keys
+            SHELL
+
+            server.vm.provision "install-ansible-tarball", type: "shell", inline: <<-SHELL
+                tarball="/vagrant/$(ls /vagrant | grep -i ansible | grep -i .tar)"
+                if [ -f "${tarball}" ]; then
+                    /vagrant/install ${tarball}
+                else
+                    echo "Ansible tarball does not exist, nothing to do"
+                fi
+            SHELL
 
         end # end config.vm
     end # end Dir.glob

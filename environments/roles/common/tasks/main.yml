@@ -1,0 +1,65 @@
+---
+# tasks file for common
+
+- name: ensure group "app" exists
+  group:
+    name: app
+    gid: 500
+    state: present
+    system: no
+  tags: common
+
+- name: ensure user "appu" exists
+  user:
+    name: appu
+    uid: 5000
+    # openssl passwd -1 -salt cobrakai Happy@pp
+    password: $1$cobrakai$xx5ww3HZA49MsCVUhmHTk0
+    shell: /bin/bash
+    group: app
+    append: no
+  tags: common
+
+- name: initialize .ssh directory
+  file:
+    path: /home/appu/.ssh
+    state: directory
+    owner: appu
+    group: app
+    mode: 0700
+  become: yes
+  become_method: sudo
+  tags: common
+
+- name: copy ssh private key for appu
+  copy:
+    src: id_rsa
+    dest: /home/appu/.ssh/id_rsa
+    owner: appu
+    group: app
+    mode: 0600
+  become: yes
+  become_method: sudo
+  tags: common
+
+- name: copy ssh public key for appu
+  copy:
+    src: id_rsa.pub
+    dest: /home/appu/.ssh/id_rsa.pub
+    owner: appu
+    group: app
+    mode: 0644
+  become: yes
+  become_method: sudo
+  tags: common
+
+- name: set up authorized_keys
+  copy:
+    src: id_rsa.pub
+    dest: /home/appu/.ssh/authorized_keys
+    owner: appu
+    group: app
+    mode: 0644
+  become: yes
+  become_method: sudo
+  tags: common
