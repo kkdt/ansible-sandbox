@@ -2,13 +2,13 @@
     "server": {
         "id" : "student",
         "hostname" : "student",
-        "memory": 512,
+        "memory": 1024,
         "cpus": 1,
         "network" : {
             "type" : "private_network",
             "ip" : "10.10.60.102",
             "ports" : [
-                { "host": 9920, "guest": 8920 }
+                { "host": 9081, "guest": 8081 }
             ]
         },
         "hosts": [

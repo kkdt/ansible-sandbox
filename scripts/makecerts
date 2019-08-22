@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# https://gist.github.com/kkdt/3b6c8594e7867a43d57ad482ce9bd62b
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ ! -f ${DIR}/makecerts.env ]; then
+    echo "Error: Missing some functions"
+    exit 1
+fi
+
+source ${DIR}/makecerts.env
+
+which keytool &>/dev/null
+[ $? -eq 0 ] || { echo "keytool command not found."; exit 1; }
+
+# https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/keytool.html
+# The following command creates the certificate e1 and stores it in the file e1.cert,
+# which is signed by ca2. As a result, e1 should contain ca, ca1, and ca2 in its certificate chain:
+#    keytool -alias e1 -certreq | keytool -alias ca2 -gencert > e1.cert
+# CN=cName, OU=orgUnit, O=org, L=city, S=state, C=countryCode
+
+server=$(hostname)
+serverAlias=server
+cap12=${DIR}/ca.p12
+cacert=${DIR}/ca.crt
+serverp12=${DIR}/server.p12
+servercsr=${DIR}/${server}.csr
+servercer=${DIR}/server.crt
+storepass=changeit
+caAlias=ca
+
+# remove any existing artifacts
+rm -f ${cap12}
+rm -f ${cacert}
+rm -f ${serverp12}
+rm -f ${serverjks}
+
+echo "Generating CA: ${cap12}"
+generateCA ${caAlias} ${storepass}
+
+echo "CA X509 certificate: ${cacert}"
+exportX509Certificate ${cap12} ${caAlias} ${storepass}
+
+echo "Generating server: ${serverp12}"
+generateKeystore ${server} ${storepass} ${serverAlias}
+mv ${server}.p12 ${serverp12}
+
+echo "Create csr: ${servercsr}"
+keytool -certreq -alias ${serverAlias} -keystore ${serverp12} -file ${servercsr} --storepass ${storepass} \
+    -ext "san=dns:${server},dns:localhost,ip:127.0.0.1" \
+    -storetype PKCS12
+
+echo "Signing csr: ${servercer}"
+keytool -alias ${caAlias} -keystore ${cap12} -storepass ${storepass} -gencert \
+    -keyalg RSA -storetype PKCS12 -rfc \
+    -infile ${servercsr} -outfile ${servercer} \
+    -ext "san=dns:${server},dns:localhost,ip:127.0.0.1" \
+    -validity 365
+
+echo "Creating server keystore: ${serverjks}"
+#keytool -import -trustcacerts -alias ${caAlias} -keystore ${serverjks} \
+#    -storepass ${storepass} -storetype JKS \
+#    -file ${cacert} -noprompt
+#keytool -import -trustcacerts -alias ${serverAlias} -keystore ${serverjks} \
+#    -storepass ${storepass} -keypass ${storepass} -storetype JKS \
+#    -file ${servercer} -noprompt
+
+keytool -import -trustcacerts -alias ${caAlias} -keystore ${serverp12} \
+    -storetype PKCS12 -storepass ${storepass} \
+    -file  ${cacert} -noprompt
+
+keytool -import -trustcacerts -alias ${serverAlias} -keystore ${serverp12} \
+    -storetype PKCS12 -storepass ${storepass} \
+    -file  ${servercer}
+
+# cleaning up
+rm -f ${servercsr}

@@ -1,0 +1,64 @@
+---
+# tasks file for create_users.yml
+
+- name: ensure users exist
+  user:
+    name: "{{item.username}}"
+    uid: "{{item.uid}}"
+    comment: "{{item.comment}}"
+    password: "{{item.password}}"
+    groups: "{{item.groups}}"
+    append: "{{item.append}}"
+    shell: /bin/bash
+  with_items: "{{ users }}"
+  tags: common
+
+- name: add users to sudoers
+  lineinfile: "dest=/etc/sudoers
+    insertafter=EOF
+    line='{{ item.username }} ALL=(ALL) NOPASSWD: ALL'
+    regexp='^{{ item.username }} .*'
+    state=present"
+  when: '{{ item.sudo }} == true'
+  with_items: '{{ users }}'
+  tags: common
+
+- name: initialize .ssh directory
+  file:
+    path: "/home/{{item.username}}/.ssh"
+    state: directory
+    mode: 0700
+  become: yes
+  become_user: '{{ item.username }}'
+  with_items: '{{ users }}'
+  tags: common
+
+- name: copy ssh private key for users
+  copy:
+    src: id_rsa
+    dest: "/home/{{ item.username }}/.ssh/id_rsa"
+    mode: 0600
+  become: yes
+  become_user: '{{ item.username }}'
+  with_items: '{{ users }}'
+  tags: common
+
+- name: copy ssh public key for users
+  copy:
+    src: id_rsa.pub
+    dest: "/home/{{ item.username }}/.ssh/id_rsa.pub"
+    mode: 0644
+  become: yes
+  become_user: '{{ item.username }}'
+  with_items: '{{ users }}'
+  tags: common
+
+- name: set up authorized_keys
+  copy:
+    src: id_rsa.pub
+    dest: "/home/{{ item.username }}/.ssh/authorized_keys"
+    mode: 0644
+  become: yes
+  become_user: '{{ item.username }}'
+  with_items: '{{ users }}'
+  tags: common

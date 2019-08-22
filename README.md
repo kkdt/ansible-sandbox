@@ -12,4 +12,6 @@
 
 Ansible Provisioning
 
-1. Common - application group and user, sets up ssh keys for application user (appu)
+1. Common - application groups and users, set up ssh keys for all users
+
+2. Nexus - [ansible-nexus-oss](https://github.com/savoirfairelinux/ansible-nexus3-oss) forked version to handle new Nexus versions (included with this baseline for now) nexus-oss commit c91fa75

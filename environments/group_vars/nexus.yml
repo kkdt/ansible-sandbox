@@ -1,0 +1,109 @@
+# nexus_version: '3.1.0-04'
+# nexus_version: '3.2.1-01'
+# nexus_version: '3.3.0-01'
+# nexus_version: '3.4.0-02'
+nexus_version: '3.15.0-01'
+# nexus_version: '3.17.0-01'
+nexus_script_api_root: 'service/rest/v1/script/'
+nexus_download_dir: /tmp
+nexus_default_port: 8081
+nexus_default_context_path: '/'
+nexus_os_group: 'nexus'
+nexus_os_user: 'nexus'
+nexus_installation_dir: '/opt'
+nexus_data_dir: '/data/nexus'
+nexus_tmp_dir: '/tmp/nexus'
+nexus_anonymous_access: true
+nexus_branding_header: ""
+nexus_branding_footer: "Last provisionned {{ ansible_date_time.iso8601 }}"
+nexus_timezone: 'UTC'
+nexus_admin_password: "admin123"
+httpd_setup_enable: false
+nexus_config_npm: true
+nexus_blob_split: true
+nexus_privileges:
+  - name: all-repos-read
+    description: 'Read and browse access to all repos'
+    repository: '*'
+    actions:
+      - read
+      - browse
+nexus_roles:
+  - id: Developpers
+    name: developers
+    description: developers
+    privileges:
+      - all-repos-read
+    roles: []
+nexus_local_users:
+  - username: "nexus"
+    first_name: "nexus"
+    last_name: "nexus"
+    email: "nexus@company.com"
+    password: "password"
+    roles:
+      - Developpers
+
+# blob stores
+nexus_blobstores:
+  - name: cots-artifacts
+    path: /data/nexus-blobs/cots
+  - name: npm-internal-artifacts
+    path: /data/nexus-blobs/npm-internal
+  - name: npm-all-artifacts
+    path: /data/nexus-blobs/npm-all
+  - name: npm-proxy-artifacts
+    path: /data/nexus-blobs/npm-proxy
+
+# blob stores scheduled compact
+nexus_scheduled_tasks:
+  - name: compact-cots
+    cron: '0 0 22 * * ?'
+    typeId: blobstore.compact
+    taskProperties:
+      blobstoreName: 'cots-artifacts'
+  - name: compact-npm-internal
+    cron: '0 0 22 * * ?'
+    typeId: blobstore.compact
+    taskProperties:
+      blobstoreName: 'npm-internal-artifacts'
+  - name: compact-npm-all
+    cron: '0 0 22 * * ?'
+    typeId: blobstore.compact
+    taskProperties:
+      blobstoreName: 'npm-all-artifacts'
+  - name: compact-npm-proxy
+    cron: '0 0 22 * * ?'
+    typeId: blobstore.compact
+    taskProperties:
+      blobstoreName: 'npm-proxy-artifacts'
+
+# npm support
+nexus_repos_npm_hosted:
+  - name: npm-internal
+    blob_store: "npm-internal-artifacts"
+nexus_repos_npm_group:
+  - name: npm-all
+    blob_store: "npm-all-artifacts"
+    member_repos:
+      - npm-internal
+      - npm-proxy
+nexus_repos_npm_proxy:
+  - name: npm-proxy
+    blob_store: "npm-proxy-artifacts"
+    remote_url: https://registry.npmjs.org
+
+# maven support
+nexus_repos_maven_proxy:
+  - name: central
+    remote_url: 'https://repo1.maven.org/maven2/'
+    layout_policy: permissive
+nexus_repos_maven_hosted:
+  - name: cots
+    version_policy: mixed
+    write_policy: allow
+    blob_store: cots-artifacts
+nexus_repos_maven_group:
+  - name: public
+    member_repos:
+      - central

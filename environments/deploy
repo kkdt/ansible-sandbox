@@ -18,4 +18,4 @@ fi
 source "${CURRENTDIR}/${env}.env"
 
 ansible-playbook ${CURRENTDIR}/playbooks/master.yml \
-    -i "${CURRENTDIR}/vagrant"
+    --inventory "${CURRENTDIR}/${env}"

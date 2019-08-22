@@ -1,0 +1,90 @@
+usergroups:
+  - name: app
+    gid: 500
+    system: no
+  - name: developers
+    gid: 501
+    system: no
+
+users:
+  - username: appu
+    # openssl passwd -1 -salt cobrakai Happy@pp
+    password: "$1$cobrakai$xx5ww3HZA49MsCVUhmHTk0"
+    comment: application user
+    uid: 5000
+    groups: app
+    append: yes
+    sudo: false
+  - username: user1
+    # openssl passwd -1 -salt cobrakai Happy@pp
+    password: "$1$cobrakai$xx5ww3HZA49MsCVUhmHTk0"
+    comment: user1 fullname
+    uid: 5001
+    groups: app,developers
+    append: yes
+    sudo: true
+  - username: user2
+    # openssl passwd -1 -salt cobrakai Happy@pp
+    password: "$1$cobrakai$xx5ww3HZA49MsCVUhmHTk0"
+    comment: user2 fullname
+    uid: 5002
+    groups: app,developers
+    append: yes
+    sudo: true
+
+
+
+
+java_home: /usr/java/latest
+ca_password: changeit
+ca_certificate: |
+    -----BEGIN CERTIFICATE-----
+    MIIDZzCCAk+gAwIBAgIEA6BbcTANBgkqhkiG9w0BAQsFADBkMQswCQYDVQQGEwJV
+    UzELMAkGA1UECBMCVkExEDAOBgNVBAcTB0ZhaXJmYXgxDTALBgNVBAoTBGtrZHQx
+    DTALBgNVBAsTBGtrZHQxGDAWBgNVBAMTD2trZHQuZ2l0aHViLmNvbTAeFw0xOTA4
+    MjAwNDE3NTNaFw0yMDA4MTkwNDE3NTNaMGQxCzAJBgNVBAYTAlVTMQswCQYDVQQI
+    EwJWQTEQMA4GA1UEBxMHRmFpcmZheDENMAsGA1UEChMEa2tkdDENMAsGA1UECxME
+    a2tkdDEYMBYGA1UEAxMPa2tkdC5naXRodWIuY29tMIIBIjANBgkqhkiG9w0BAQEF
+    AAOCAQ8AMIIBCgKCAQEAkZ+gtEBWtAbEH/nVvQhRIyjRC9KR/qA5rCMyKf0oLgM+
+    Vc1IRnjhm+IiBmwrqq9fsHZll2sVEd5qk+3/NChTvgclnudyezImWh6BVPCrcbts
+    ckwVovEXK2i/OGAdirOcsYNQsu2uapQKUDX3tK2//fMpV+83Q40lp3KYVcWc512u
+    VVkZUDvvzhncdw3Uqmv92ucrzKCnnJhLFPrDWsJ1EesL4YLL0Wujqzs+WW73HvEQ
+    8Sx+6nsZVOffqlLj1Qp3Z1A6809luU2NQp4c3jp+/xQxCYTZPK4h0/PfYh4JdjIz
+    DwRf2XoglTZL4jCvkbg5NXVyWPtdhrXM/MC6aCy76QIDAQABoyEwHzAdBgNVHQ4E
+    FgQURwh9SW5qT4G6FwO6ma4d7Q3ZWkEwDQYJKoZIhvcNAQELBQADggEBAAg0xoHF
+    +EWjL+iZVVtyYNJ7oAtL7c7DkOCZuEu+V0bZN2CD2zkjkXV9Irig2NIis2h0jgT4
+    PB5ilU14+zRaVamEI0ICCGunhCyML8Kz+sWcbJPMg/gB7tT22Aeu3HcYpu7SMkbW
+    y4xmHbm4IdxvrPqGON6a0CyHmr3HeOsPzTy2hfE+xE5dwPT1g/LsadHmF9Vaw3k6
+    3fouceA5k9NLN0It407y4RjMxbeNddLXhN6kT5+WWwdjcelsmzuJaqrqiFbTkgkE
+    yiN1LJwWKkFvFr9zs7xUlf45h6L8NRNt8ZuzvtZ6luwQOR5o5tjziu2+wmo4VuwV
+    9RkfMdxoKCChZHY=
+    -----END CERTIFICATE-----
+ca_privatekey: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCRn6C0QFa0BsQf
+    +dW9CFEjKNEL0pH+oDmsIzIp/SguAz5VzUhGeOGb4iIGbCuqr1+wdmWXaxUR3mqT
+    7f80KFO+ByWe53J7MiZaHoFU8Ktxu2xyTBWi8RcraL84YB2Ks5yxg1Cy7a5qlApQ
+    Nfe0rb/98ylX7zdDjSWncphVxZznXa5VWRlQO+/OGdx3DdSqa/3a5yvMoKecmEsU
+    +sNawnUR6wvhgsvRa6OrOz5Zbvce8RDxLH7qexlU59+qUuPVCndnUDrzT2W5TY1C
+    nhzeOn7/FDEJhNk8riHT899iHgl2MjMPBF/ZeiCVNkviMK+RuDk1dXJY+12Gtcz8
+    wLpoLLvpAgMBAAECggEAFu3KcPc8b6YtFVfSJqx7kgyoNbNXF3+E9SyphmD9BZmv
+    I/VprubzpwbJErfPfFWWvIM35cqPi7u4jkhICZ9b6CzZ6JZKuUkhLslk1cn7RLId
+    FjYSphBN9KDOkwLXQ/KZ9n1VpIa2EsPyh8SnlwRQmZzC4rygt/sudZoekErINMmX
+    iSCoBfOOnjWMAk6N8ke9/D4nXMI5mdsaREC7pFiKtZCxTpt5XVOhyFjt+X529CD5
+    aTM73NKx7lDeJUQydxxzht6ZEjna4Ax1uo/taIGiaWNk17sxPtxJ3fNwgoMQJrhw
+    NmySofOKFrE2VsJfur4/ZRznUUoh4fEf+bQgBruIAQKBgQDGeE8zrEHSIe/V7bay
+    bssez5i66ER5485aJZ/Yc556RuC5NzrUBQvvZEGSKSofuxYgLyiY+kUb26JbrZFJ
+    ISvNNgfAq6HYUwRLNNASqx7N/0Mvsm7pQF3p6NyMVIF3JsE58tmc6TtX/0kZZfll
+    ZyjWakzVz7+2U4BNy4ltlclrAQKBgQC71covTpig9ygPa+2dzwYogLja2gzIOlJp
+    Bk2ZFQgq+AIjpTnA2iriTDeP5W9tOCTuXzYb+FWT3Pt5qeMT6OmjopS3SemciQKI
+    wgXo2Jr2KkTOWvrSfKKQoMHF3lyfkEBmRXQxjAn9Zb2jaimVTwEnnboHYcazenvh
+    g1R7URJY6QKBgCmDSK26PhpB1vScQDaaTgonyf5uTsRgDe11KTYRGPjikmarUra+
+    R3zPL5fu3Ey+ySX6NzeoQYROMGuUpmrxcUP/JSf7vmKNGrzQUyVUfaEA34C+hcxs
+    Fjiy6E7B7kKJ7Ki+Tx4u+qaxUwzo831uUnBm06N1TNhKJvAevqQZTIQBAoGAJBqq
+    2z77PW1kaNpw+PVTFLPxVDe3X0E+l+tbPQJ66G91Uc6vdC87MPY/c8xBB7hT+PGa
+    H/Qy1tISEEekWy5Ywlg8x6JQYgM/1nOc2S3RU2G6igOY1J6aTLxpopPkL9N1XXMa
+    K2/kd613rxJ33bgq26eIm2Si4dq4NxecRHvH0AkCgYAmaJVSiBmwsy9z0LU5EZAZ
+    xGtJ3O2eTs5wxdMSGME6LIJJgYqRmgkGfQzmzat6oRHkkuTdi99UX47c82f3RC0N
+    rGtSkbqlUSaVAsOdXl0bmBr/Eb4jHZBOnvKHfJzF742HVD3Odwb+sLXSTawr+PJR
+    LItsImq+Ql61AWhjrC1HRw==
+    -----END PRIVATE KEY-----

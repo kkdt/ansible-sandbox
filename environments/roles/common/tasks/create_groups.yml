@@ -1,0 +1,11 @@
+---
+# tasks file for create_groups.yml
+
+- name: ensure groups exist
+  group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | int }}"
+    state: present
+    system: "{{ item.system }}"
+  with_items: '{{ usergroups }}'
+  tags: common

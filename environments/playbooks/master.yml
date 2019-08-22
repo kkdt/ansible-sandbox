@@ -5,5 +5,15 @@
   become: yes
   become_method: sudo
 
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ java_home }}/bin"
+
   roles:
     - common
+
+- hosts: nexus
+  become: yes
+  become_method: sudo
+
+  roles:
+    - ansible-nexus3-oss
