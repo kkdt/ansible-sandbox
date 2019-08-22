@@ -10,6 +10,8 @@
 
 4. Inside Vagrant: `/vagrant/environments/deploy vagrant` (password is vagrant)
 
+5. Browse Nexus on your workstation browser - http://localhost:9081
+
 Ansible Provisioning
 
 1. Common - application groups and users, set up ssh keys for all users
