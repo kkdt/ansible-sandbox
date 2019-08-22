@@ -1,4 +1,4 @@
-[vagrant]
+[internal]
 student ansible_port=22 ansible_host=192.0.2.50
 teacher ansible_port=22 ansible_host=192.0.2.50
 
