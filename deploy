@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+
+CURRENTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ ! $# -eq 1 ]; then
+    echo "Error: Please specify installation environment"
+    exit 1
+fi
+
+env="$1"
+
+if [ -z "${env}" -o ! -f "${CURRENTDIR}/environments/${env}/${env}.env" ]; then
+    echo "Error: Unknown environment ${env}"
+    exit 2
+fi
+
+source "${CURRENTDIR}/environments/${env}/${env}.env"
+
+__user=""
+read -p "Connect to hosts as: ($(whoami)) " __user
+if [ -z "${__user}" ]; then
+    __user=$(whoami)
+fi
+
+__taskuser=""
+read -p "Execute tasks as: ($(whoami)) " __taskuser
+if [ -z "${__taskuser}" ]; then
+    __taskuser=$(whoami)
+fi
+
+export ANSIBLE_ROLES_PATH=${CURRENTDIR}/roles
+
+ansible-playbook ${CURRENTDIR}/playbooks/master.yml \
+    -i ${CURRENTDIR}/environments/${env}/hosts \
+    -u "${__user}" \
+    -k \
+    --become-method=sudo \
+    --become-user=${__taskuser} \
+    -K

@@ -11,6 +11,7 @@
     append: "{{item.append}}"
     shell: /bin/bash
   with_items: "{{ users }}"
+  when: users is defined
   tags: common
 
 - name: add users to sudoers
@@ -19,7 +20,7 @@
     line='{{ item.username }} ALL=(ALL) NOPASSWD: ALL'
     regexp='^{{ item.username }} .*'
     state=present"
-  when: '{{ item.sudo }} == true'
+  when: "users is defined and item.sudo == true"
   with_items: '{{ users }}'
   tags: common
 
@@ -31,6 +32,7 @@
   become: yes
   become_user: '{{ item.username }}'
   with_items: '{{ users }}'
+  when: users is defined
   tags: common
 
 - name: copy ssh private key for users
@@ -41,6 +43,7 @@
   become: yes
   become_user: '{{ item.username }}'
   with_items: '{{ users }}'
+  when: users is defined
   tags: common
 
 - name: copy ssh public key for users
@@ -51,6 +54,7 @@
   become: yes
   become_user: '{{ item.username }}'
   with_items: '{{ users }}'
+  when: users is defined
   tags: common
 
 - name: set up authorized_keys
@@ -61,4 +65,5 @@
   become: yes
   become_user: '{{ item.username }}'
   with_items: '{{ users }}'
+  when: users is defined
   tags: common

@@ -4,7 +4,7 @@
 CURRENTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 function usage() {
-   echo "Usage: install /path/to/ansible.tar"
+   echo "Usage: install_ansible /path/to/ansible.tar"
    echo "    or, set ANSIBLETAR=/path/to/ansible.tar"
 }
 
@@ -14,9 +14,9 @@ if ! [ $(id -u) = 0 ]; then
    exit -1
 fi
 
-if [ -f "${CURRENTDIR}/install.$(hostname -s)" ]; then
-    echo "Using ${CURRENTDIR}/install.$(hostname -s)"
-    source ${CURRENTDIR}/install.$(hostname -s)
+if [ -f "${CURRENTDIR}/install_ansible.$(hostname -s)" ]; then
+    echo "Using ${CURRENTDIR}/install_ansible.$(hostname -s)"
+    source ${CURRENTDIR}/install_ansible.$(hostname -s)
 fi
 
 if [ $# -ne 1 -a -z "${ANSIBLETAR}" ]; then

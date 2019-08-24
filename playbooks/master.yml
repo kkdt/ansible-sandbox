@@ -4,6 +4,7 @@
 - hosts: all
   become: yes
   become_method: sudo
+  gather_facts: true
 
   environment:
     PATH: "{{ ansible_env.PATH }}:{{ java_home }}/bin"
@@ -14,6 +15,10 @@
 - hosts: nexus
   become: yes
   become_method: sudo
+  gather_facts: true
 
-  roles:
-    - ansible-nexus3-oss
+  tasks:
+    - name: Nexus provisioning
+      include_role:
+        name: ansible-nexus3-oss
+      # when: not idontwanttorun

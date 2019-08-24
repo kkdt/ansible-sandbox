@@ -1,11 +1,3 @@
-usergroups:
-  - name: app
-    gid: 500
-    system: no
-  - name: developers
-    gid: 501
-    system: no
-
 users:
   - username: appu
     # openssl passwd -1 -salt cobrakai Happy@pp

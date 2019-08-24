@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
             server.vm.provision "install-ansible-tarball", type: "shell", inline: <<-SHELL
                 tarball="/vagrant/$(ls /vagrant | grep -i ansible | grep -i .tar)"
                 if [ -f "${tarball}" ]; then
-                    /vagrant/install ${tarball}
+                    /vagrant/install_ansible ${tarball}
                 else
                     echo "Ansible tarball does not exist, nothing to do"
                 fi

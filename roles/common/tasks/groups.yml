@@ -8,4 +8,5 @@
     state: present
     system: "{{ item.system }}"
   with_items: '{{ usergroups }}'
+  when: usergroups is defined
   tags: common

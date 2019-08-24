@@ -6,34 +6,6 @@ usergroups:
     gid: 501
     system: no
 
-users:
-  - username: appu
-    # openssl passwd -1 -salt cobrakai Happy@pp
-    password: "$1$cobrakai$xx5ww3HZA49MsCVUhmHTk0"
-    comment: application user
-    uid: 5000
-    groups: app
-    append: yes
-    sudo: false
-  - username: user1
-    # openssl passwd -1 -salt cobrakai Happy@pp
-    password: "$1$cobrakai$xx5ww3HZA49MsCVUhmHTk0"
-    comment: user1 fullname
-    uid: 5001
-    groups: app,developers
-    append: yes
-    sudo: true
-  - username: user2
-    # openssl passwd -1 -salt cobrakai Happy@pp
-    password: "$1$cobrakai$xx5ww3HZA49MsCVUhmHTk0"
-    comment: user2 fullname
-    uid: 5002
-    groups: app,developers
-    append: yes
-    sudo: true
-
-
-
 
 java_home: /usr/java/latest
 ca_password: changeit

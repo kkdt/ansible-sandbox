@@ -5,9 +5,8 @@
   register: output
 - debug: msg="PATH = {{ output.stdout }}"
 
-- include: create_groups.yml
-
-- include: create_users.yml
+- include: groups.yml
+- include: users.yml
 
 # - name: create server keystore
 #   java_keystore:
