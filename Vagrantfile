@@ -28,6 +28,7 @@ Vagrant.configure("2") do |config|
         memory = json.has_key?("memory") ? json["memory"] : 512
         cpus = json.has_key?("cpus") ? json["cpus"] : 1
         hosts = json.has_key?("hosts") ? json["hosts"] : []
+        rpms = json.has_key?("rpms") ? json["rpms"] : []
 
         config.vm.define id do |server|
             server.vm.hostname = hostname
@@ -79,6 +80,19 @@ Vagrant.configure("2") do |config|
                     echo "Ansible tarball does not exist, nothing to do"
                 fi
             SHELL
+
+            server.vm.provision "install-docker", type: "shell", inline: <<-SHELL
+                sudo yum install -y docker
+                sudo systemctl start docker
+            SHELL
+
+            rpmid=1
+            rpms.each do |rpm|
+                # stage all rpm files
+                filename = File.basename("#{rpm}")
+                server.vm.provision "file", source: "#{rpm}", destination: "/tmp/#{rpmid}-#{filename}"
+                rpmid = rpmid + 1
+            end
 
         end # end config.vm
     end # end Dir.glob

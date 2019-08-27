@@ -13,6 +13,9 @@
         },
         "hosts": [
             { "hostname": "teacher", "ip": "10.10.60.103"}
+        ],
+        "rpms": [
+            "/Users/thinh/Downloads/jdk-11.0.4_linux-x64_bin.rpm"
         ]
     }
 }
