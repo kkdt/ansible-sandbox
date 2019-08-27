@@ -45,3 +45,10 @@ dockeradmin [options] imgname
 packages=()
 rpms=('/tmp/jdk-11.0.4_linux-x64_bin.rpm')
 ```
+
+```
+sudo docker run basejdk:latest java -version
+java version "11.0.4" 2019-07-16 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.4+10-LTS)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.4+10-LTS, mixed mode)
+```
