@@ -1,5 +1,9 @@
 # ansible-sandbox
 
+# Overview
+
+This project experiments with Ansible as a deployment tool - building the development (and production) environments for any project. In addition, it provides a way to build a base docker image for Java applications.
+
 # Quickstart
 
 1. Download the [Ansible tarball](https://releases.ansible.com/ansible/?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW) and drop it in the root level of this project.
@@ -12,7 +16,7 @@
 
 5. Browse Nexus on your workstation browser - http://localhost:9081
 
-Ansible Provisioning
+# Ansible Provisioning
 
 1. Common - application groups and users, set up ssh keys for all users
 

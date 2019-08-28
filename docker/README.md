@@ -5,12 +5,22 @@
 The goal is to provide an `dockeradmin` script to build out a Docker base image. There are many ways to perform this task. The setup provided here assumes a RHEL-based target environment. Using [moby/moby](https://github.com/moby/moby) as a reference, this project modifies [mkimage-yum.sh](https://github.com/moby/moby/blob/master/contrib/mkimage-yum.sh) to match up with development requirements.
 
 ```
-dockeradmin [options] imgname
-  imgname            Must have a corresponding .env file
+dockeradmin [options] /path/to/imgenv
+  imgenv             The full path to the imgenv file
   -y  <yum.conf>     The full path to the yum.conf - default to /etc/yum.conf
   -t  <tag>          Tag name - default 'latest'
   -h                 Print the help message
 ```
+
+# Image Environment
+
+Configuration file detailing the following.
+
+1. `reponame` The image repository name.
+
+2. `packages` Full name of yum packages to install.
+
+3. `rpms` Full path of RPM files on the local machine to install as part of the base image.
 
 # Assumptions
 
@@ -42,6 +52,7 @@ dockeradmin [options] imgname
 
 ```
 # basejdk.env
+reponame=basejdk
 packages=()
 rpms=('/tmp/jdk-11.0.4_linux-x64_bin.rpm')
 ```
