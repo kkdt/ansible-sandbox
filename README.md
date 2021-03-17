@@ -2,28 +2,49 @@
 
 # Overview
 
-This project experiments with Ansible as a deployment tool - building the development (and production) environments for any project. In addition, it provides a way to build a base docker image for Java applications.
+This project experiments with Ansible as a deployment tool - building the development (and production) environments for any project.
 
 # Quickstart
 
-1. Download the [Ansible tarball](https://releases.ansible.com/ansible/?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW) and drop it in the root level of this project.
+1. Bring up the all servers
 
-2. Execute: `vagrant up student`
+    ```bash
+    $ vagrant up
+    ```
 
-3. Execute: `vagrant ssh student`
+2. Provision the dev00 server with Ansible
 
-4. Inside Vagrant: `/vagrant/deploy vagrant` (password is vagrant)
+    ```bash
+    $ vagrant provision dev00 --provision-with=ansible
+    ```
 
-5. Browse Nexus on your workstation browser - http://localhost:9081
+3. Establish trust for the `vagrant` user between all servers
 
-# Ansible Provisioning
+    ```bash
+    $ vagrant provision dev00 --provision-with=trust
+    $ vagrant provision bs01 --provision-with=trust
+    $ vagrant provision db01 --provision-with=trust
+    $ vagrant provision ldap01 --provision-with=trust
+    $ vagrant provision ss01 --provision-with=trust
+    $ vagrant provision ss02 --provision-with=trust
+    ```
 
-1. Common - application groups and users, set up ssh keys for all users
+4. Log into a server and confirm you can ssh into all the other servers without password. For example, 
 
-2. Nexus - [ansible-nexus-oss](https://github.com/savoirfairelinux/ansible-nexus3-oss) forked version to handle new Nexus versions (included with this baseline for now) nexus-oss commit c91fa75
+    ```bash
+    $ vagrant ssh dev00
+    [vagrant@dev00] $ ssh bs01
+    ```
 
-# References
+# Ansible
 
-1. https://docs.ansible.com/ansible/latest/modules/include_role_module.html
+This project sets up the following servers for Ansible to run playbooks against.
 
-2. https://docs.ansible.com/ansible/latest/user_guide/intro_dynamic_inventory.html#using-inventory-directories-and-multiple-inventory-sources
+| Server    | Description                               |
+| :---      | :---                                      |
+| dev00     | The workstation with Ansible installed    |
+| bs01      | Server   |
+| db01      | Server   |
+| ldap01    | Server   |
+| ss01      | Server   |
+| ss02      | Server   |

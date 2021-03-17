@@ -1,0 +1,19 @@
+{
+  "server": {
+    "box": "centos/7",
+    "id" : "dev00",
+    "hostname": "dev00",
+    "memory": 1024,
+    "cpus":1,
+    "network" : {
+      "type" : "private_network",
+      "ip" : "10.10.60.100",
+      "bridge" : [],
+      "ports" : []
+    },
+    "hosts": {
+      "file": "./vagrant/etc/hosts.default",
+      "destination": "/tmp/hosts.dev00"
+    }
+  }
+}
