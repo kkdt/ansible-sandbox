@@ -6,7 +6,7 @@ This project experiments with Ansible as a deployment tool - building the develo
 
 # Quickstart
 
-1. Bring up the all servers
+1. Bring up all servers
 
     ```bash
     $ vagrant up
@@ -40,11 +40,11 @@ This project experiments with Ansible as a deployment tool - building the develo
 
 This project sets up the following servers for Ansible to run playbooks against.
 
-| Server    | Description                               |
-| :---      | :---                                      |
-| dev00     | The workstation with Ansible installed    |
-| bs01      | Server   |
-| db01      | Server   |
-| ldap01    | Server   |
-| ss01      | Server   |
-| ss02      | Server   |
+| Server    | Description                               | Configuration |
+| :---      | :---                                      | :---          |
+| dev00     | The workstation with Ansible installed    | [dev00.json](vagrant/dev00.json) |
+| bs01      | Server   | [bs01.json](vagrant/bs01.json) |
+| db01      | Server   | [db01.json](vagrant/db01.json) |
+| ldap01    | Server   | [ldap01.json](vagrant/ldap01.json) |
+| ss01      | Server   | [ss01.json](vagrant/ss01.json) |
+| ss02      | Server   | [ss02.json](vagrant/ss02.json) |
