@@ -36,6 +36,8 @@ This project experiments with Ansible as a deployment tool - building the develo
     [vagrant@dev00] $ ssh bs01
     ```
 
+5. To kill all servers: `vagrant destroy -f`
+
 # Ansible
 
 This project sets up the following servers for Ansible to run playbooks against.
