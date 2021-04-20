@@ -2,7 +2,7 @@
 
 # Overview
 
-This project experiments with Ansible as a deployment tool - building the development (and production) environments for any project.
+This project experiments with Ansible as a deployment tool - building an environment for a software application suite.
 
 # Quickstart
 
@@ -27,6 +27,12 @@ This project experiments with Ansible as a deployment tool - building the develo
     $ vagrant provision ldap01 --provision-with=trust
     $ vagrant provision ss01 --provision-with=trust
     $ vagrant provision ss02 --provision-with=trust
+    ```
+    
+    or
+    
+    ```bash
+    $ vagrant provision  --provision-with=trust
     ```
 
 4. Log into a server and confirm you can ssh into all the other servers without password. For example, 

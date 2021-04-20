@@ -1,6 +1,7 @@
 {
   "server": {
-    "box": "centos/7",
+    "box": "geerlingguy/centos7",
+    "syncproject": false,
     "id" : "dev00",
     "hostname": "dev00",
     "memory": 1024,

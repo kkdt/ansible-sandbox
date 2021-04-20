@@ -75,17 +75,26 @@ Vagrant.configure("2") do |config|
     hosts = json.has_key?("hosts") ? json["hosts"] : {}
     memory = json.has_key?("memory") ? json["memory"] : 512
     cpus = json.has_key?("cpus") ? json["cpus"] : 1
+    syncproject = json.has_key?("syncproject") ? json["syncproject"] : false
 
     config.vm.define id do |server|
       server.vm.box = json.has_key?('box') ? json['box'] : "kkdt/c7dev"
       server.vm.hostname = hostname
       server.vm.define id
 
+      if Vagrant.has_plugin?("vagrant-vbguest") then
+        server.vbguest.auto_update = false
+      end
+
       server.vm.provider "virtualbox" do |vb|
         vb.gui = false
         vb.name = id
         vb.memory = memory
         vb.cpus = cpus
+      end
+      
+      if syncproject then
+        server.vm.synced_folder ".", "/vagrant"
       end
 
       if hosts.has_key?("file") && hosts.has_key?("destination") && File.exist?("#{hosts['file']}")
@@ -107,7 +116,7 @@ Vagrant.configure("2") do |config|
           end
       end
 
-      server.vm.provision "ssh", type: "shell", args: [ "#{hostname}", network['ip'] ], inline: <<-SHELL
+      server.vm.provision "ssh",  type: "shell", args: [ "#{hostname}", network['ip'] ], inline: <<-SHELL
         touch ~vagrant/.ssh/known_hosts
         ssh-keyscan -H $1 >> ~vagrant/.ssh/known_hosts
         ssh-keyscan -H $2 >> ~vagrant/.ssh/known_hosts
