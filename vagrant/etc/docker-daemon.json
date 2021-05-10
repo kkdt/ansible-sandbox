@@ -1,0 +1,9 @@
+{
+  "debug": true,
+  "tls": false,
+  "ip": "ZZZZZZZZZZZdockeripZZZZZZZZZZZ",
+  "data-root": "/opt/docker/data",
+  "pidfile": "/opt/docker/docker.pid",
+  "group": "docker",
+  "log-driver": "json-file"
+}

@@ -12,10 +12,16 @@ This project experiments with Ansible as a deployment tool - building an environ
     $ vagrant up
     ```
 
-2. Provision the dev00 server with Ansible
+2. Specialized provisions
 
     ```bash
+    # Provision the dev00 server with Ansible
     $ vagrant provision dev00 --provision-with=ansible
+    ```
+    
+    ```bash
+    # Provision Docker
+    $ vagrant provision docker00 docker01 --provision-with=docker
     ```
 
 3. Establish trust for the `vagrant` user between all servers
@@ -27,6 +33,8 @@ This project experiments with Ansible as a deployment tool - building an environ
     $ vagrant provision ldap01 --provision-with=trust
     $ vagrant provision ss01 --provision-with=trust
     $ vagrant provision ss02 --provision-with=trust
+    $ vagrant provision docker00 --provision-with=trust
+    $ vagrant provision docker01 --provision-with=trust
     ```
     
     or
@@ -56,3 +64,5 @@ This project sets up the following servers for Ansible to run playbooks against.
 | ldap01    | Server   | [ldap01.json](vagrant/ldap01.json) |
 | ss01      | Server   | [ss01.json](vagrant/ss01.json) |
 | ss02      | Server   | [ss02.json](vagrant/ss02.json) |
+| docker00  | Docker server   | [docker00.json](vagrant/docker00.json) |
+| docker01  | Docker server   | [docker01.json](vagrant/docker01.json) |

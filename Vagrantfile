@@ -163,9 +163,28 @@ Vagrant.configure("2") do |config|
         yum install -y ansible
       SHELL
 
-      server.vm.provision "docker", run: "never", type: "shell", args: [ ], inline: <<-SHELL
-        sudo yum install -y docker
-        sudo systemctl start docker
+      server.vm.provision "docker", run: "never", type: "shell", args: [ network['ip'], 2367 ], inline: <<-SHELL
+        # install docker
+        rpm --import https://download.docker.com/linux/centos/gpg
+        sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+        sudo yum install -y docker-ce docker-ce-cli containerd.io
+
+        # configure the docker group for other users to run docker
+        sudo groupadd docker
+        sudo usermod -aG docker vagrant
+
+        # specific configurations, i.e different daemon port
+        mkdir -p /etc/docker
+        sed -e "s/ZZZZZZZZZZZdockeripZZZZZZZZZZZ/${1}/g" -e "s/ZZZZZZZZZZZdockerportZZZZZZZZZZZ/${2}/g" /vagrant/vagrant/etc/docker-daemon.json > /etc/docker/daemon.json
+        mkdir -p /opt/docker/data
+        chown -R :docker /opt/docker
+        chmod -R 770 /opt/docker
+
+        # boot on startup
+        sudo systemctl enable containerd.service
+        sudo systemctl enable docker.service
+        sudo systemctl start containerd.service
+        sudo systemctl start docker.service
       SHELL
 
     end

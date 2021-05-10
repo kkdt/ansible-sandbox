@@ -1,0 +1,20 @@
+{
+  "server": {
+    "box": "geerlingguy/centos7",
+    "syncproject": false,
+    "id" : "docker00",
+    "hostname": "docker00",
+    "memory": 1024,
+    "cpus":1,
+    "network" : {
+      "type" : "private_network",
+      "ip" : "10.10.70.100",
+      "bridge" : [],
+      "ports" : []
+    },
+    "hosts": {
+      "file": "./vagrant/etc/hosts.default",
+      "destination": "/tmp/hosts.docker00"
+    }
+  }
+}
