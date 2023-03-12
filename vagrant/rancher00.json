@@ -1,0 +1,24 @@
+{
+  "server": {
+    "box": "geerlingguy/centos7",
+    "syncproject": false,
+    "id" : "rancher00",
+    "hostname": "rancher00",
+    "memory": 6144,
+    "cpus":1,
+    "network" : {
+      "type" : "private_network",
+      "ip" : "10.10.80.100",
+      "bridge" : [],
+      "ports" : [
+        { "host": 8080, "guest": 8080 },
+        { "host": 80, "guest": 80 },
+        { "host": 443, "guest": 443 }
+      ]
+    },
+    "hosts": {
+      "file": "./vagrant/etc/hosts.default",
+      "destination": "/tmp/hosts.rancher00"
+    }
+  }
+}

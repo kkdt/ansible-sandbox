@@ -6,3 +6,6 @@
 10.10.60.105 ss02 ss02
 10.10.70.100 docker00 docker00
 10.10.70.101 docker01 docker01
+10.10.70.102 docker02 docker02
+10.10.80.100 rancher00 rancher00
+10.10.80.101 rancher01 rancher01

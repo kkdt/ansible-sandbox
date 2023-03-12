@@ -86,6 +86,10 @@ Vagrant.configure("2") do |config|
         server.vbguest.auto_update = false
       end
 
+      if Vagrant.has_plugin?("vagrant-proxyconf")
+       config.proxy.enabled = { docker: false }
+      end
+
       server.vm.provider "virtualbox" do |vb|
         vb.gui = false
         vb.name = id
@@ -161,6 +165,25 @@ Vagrant.configure("2") do |config|
       server.vm.provision "ansible", run: "never", type: "shell", args: [ ], inline: <<-SHELL
         yum install -y centos-release-ansible-29
         yum install -y ansible
+      SHELL
+
+      server.vm.provision "desktop", run: "never", type: "shell", inline: <<-SHELL
+        yum -y groupinstall "X Window System"
+        yum -y groupinstall xfce
+        systemctl isolate graphical.target
+        systemctl set-default graphical.target
+        sudo yum -y install firefox
+      SHELL
+
+      server.vm.provision "rancher", run: "never", type: "shell", args: [ hostname ], inline: <<-SHELL
+        #docker run -d --restart=always --name RancherServer --hostname ${1} -p 8080:8080 rancher/server:stable
+
+        docker run -d --restart=unless-stopped \
+          -p 80:80 -p 443:443 \
+          --privileged \
+          --name RancherServer \
+          --hostname ${1} \
+          rancher/rancher:latest
       SHELL
 
       server.vm.provision "docker", run: "never", type: "shell", args: [ network['ip'], 2367 ], inline: <<-SHELL

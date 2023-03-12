@@ -9,7 +9,13 @@ This project experiments with Ansible as a deployment tool - building an environ
 1. Bring up all servers
 
     ```bash
+    # All servers
     $ vagrant up
+    ```
+    
+    ```bash
+    # Individual servers
+    vagrant up rancher00 rancher01 docker00 docker01 docker02
     ```
 
 2. Specialized provisions
@@ -21,7 +27,7 @@ This project experiments with Ansible as a deployment tool - building an environ
     
     ```bash
     # Provision Docker
-    $ vagrant provision docker00 docker01 --provision-with=docker
+    $ vagrant provision rancher00 rancher01 docker00 docker01 docker02 --provision-with=docker
     ```
 
 3. Establish trust for the `vagrant` user between all servers
@@ -35,6 +41,10 @@ This project experiments with Ansible as a deployment tool - building an environ
     $ vagrant provision ss02 --provision-with=trust
     $ vagrant provision docker00 --provision-with=trust
     $ vagrant provision docker01 --provision-with=trust
+    $ vagrant provision docker02 --provision-with=trust
+    $ vagrant provision rancher00 --provision-with=trust
+    $ vagrant provision rancher01 --provision-with=trust
+ 
     ```
     
     or
@@ -66,3 +76,5 @@ This project sets up the following servers for Ansible to run playbooks against.
 | ss02      | Server   | [ss02.json](vagrant/ss02.json) |
 | docker00  | Docker server   | [docker00.json](vagrant/docker00.json) |
 | docker01  | Docker server   | [docker01.json](vagrant/docker01.json) |
+| rancher00  | Rancher server   | [rancher00.json](vagrant/rancher00.json) |
+| rancher01  | Rancher server   | [rancher01.json](vagrant/rancher01.json) |

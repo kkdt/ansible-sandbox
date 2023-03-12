@@ -2,19 +2,19 @@
   "server": {
     "box": "geerlingguy/centos7",
     "syncproject": false,
-    "id" : "docker02",
-    "hostname": "docker02",
-    "memory": 1024,
+    "id" : "rancher01",
+    "hostname": "rancher01",
+    "memory": 2046,
     "cpus":1,
     "network" : {
       "type" : "private_network",
-      "ip" : "10.10.70.102",
+      "ip" : "10.10.80.101",
       "bridge" : [],
       "ports" : []
     },
     "hosts": {
       "file": "./vagrant/etc/hosts.default",
-      "destination": "/tmp/hosts.docker02"
+      "destination": "/tmp/hosts.rancher01"
     }
   }
 }
